@@ -10,6 +10,8 @@ import argparse
 import json
 import torch
 import numpy as np
+if not hasattr(np, 'bool8'):
+    np.bool8 = np.bool_
 import matplotlib
 import random
 # Use the 'Agg' backend which doesn't require a display
@@ -21,10 +23,28 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 # Add the parent directory to the path
 sys.path.append(os.path.dirname(script_dir))
 
+# Import JSSEnv first
+import JSSEnv
+from JSSEnv.envs import JssEnv
+
+# Manually register the environment (will be ignored if already registered)
+from gym.envs.registration import register
+try:
+    register(
+        id="jss-v1",
+        entry_point="JSSEnv.envs:JssEnv",
+    )
+    print("Successfully registered jss-v1 environment")
+except Exception as e:
+    print(f"Note: Environment registration returned: {e}")
+    print("This is normal if the environment is already registered")
+
+# Now import gym
+import gym
+
 # Now import the PPOAgent from models directly
 from models.jss_ppo_agent import PPOAgent
-import gym
-import JSSEnv
+
 import time
 import traceback
 
@@ -159,8 +179,22 @@ def train_single_benchmark(benchmark_name, num_episodes=500, hidden_dim=64,
                 print(f"  - {path}")
             return None
         
-        # Create environment
-        env = gym.make('jss-v1', env_config={'instance_path': instance_path})
+       # Create environment - try different methods if one fails
+        try:
+            # First try standard gym.make
+            print(f"Creating environment using gym.make with instance_path: {instance_path}")
+            env = gym.make('jss-v1', env_config={'instance_path': instance_path})
+            print("Successfully created environment via gym.make")
+        except Exception as gym_error:
+            print(f"Error creating environment via gym.make: {gym_error}")
+            try:
+                # If that fails, try creating JssEnv directly
+                print("Trying to create JssEnv directly...")
+                env = JssEnv({'instance_path': instance_path})
+                print("Successfully created environment via direct instantiation")
+            except Exception as direct_error:
+                print(f"Error creating environment directly: {direct_error}")
+                raise Exception(f"Failed to create environment: {gym_error}. Direct creation also failed: {direct_error}")
         
         # Create agent with all parameters
         agent = PPOAgent(
