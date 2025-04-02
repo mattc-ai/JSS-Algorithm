@@ -132,13 +132,13 @@ def convert_benchmarks(source_dir, target_dir, benchmark_type):
 
 def main():
     parser = argparse.ArgumentParser(description='Convert LA and DMU benchmark files to JSSEnv format')
-    parser.add_argument('--la_dir', type=str, default='Job_Shop_Scheduling/SelfLabelingJobShop/benchmarks/LA',
+    parser.add_argument('--la_dir', type=str, default='SelfLabelingJobShop/benchmarks/LA',
                       help='Directory containing LA benchmark files')
-    parser.add_argument('--dmu_dir', type=str, default='Job_Shop_Scheduling/SelfLabelingJobShop/benchmarks/DMU',
+    parser.add_argument('--dmu_dir', type=str, default='SelfLabelingJobShop/benchmarks/DMU',
                       help='Directory containing DMU benchmark files')
-    parser.add_argument('--ta_dir', type=str, default='Job_Shop_Scheduling/SelfLabelingJobShop/benchmarks/TA',
+    parser.add_argument('--ta_dir', type=str, default='SelfLabelingJobShop/benchmarks/TA',
                       help='Directory containing TA benchmark files')
-    parser.add_argument('--target_dir', type=str, default='Job_Shop_Scheduling/JSSEnv/JSSEnv/envs/instances',
+    parser.add_argument('--target_dir', type=str, default='JSSEnv/JSSEnv/envs/instances',
                       help='Directory to save the converted files')
     parser.add_argument('--benchmark', type=str, help='Convert a single benchmark (e.g., ta01)')
     parser.add_argument('--benchmark_series', type=str, choices=['TA', 'LA', 'DMU'], 
