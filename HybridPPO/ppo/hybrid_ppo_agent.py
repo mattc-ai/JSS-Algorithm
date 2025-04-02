@@ -1150,7 +1150,7 @@ def train_on_multiple_benchmarks(benchmark_names, num_episodes=1000, hidden_dim=
         potential_paths = [
             os.path.join(os.path.dirname(JSSEnv.__file__), 'envs', 'instances', benchmark),
             os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-                        'Job_Shop_Scheduling', 'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark)
+                        'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark)
         ]
         
         for path in potential_paths:
@@ -1293,7 +1293,7 @@ def evaluate_on_multiple_benchmarks(benchmark_names, model_dir, num_episodes=10,
         potential_paths = [
             os.path.join(os.path.dirname(JSSEnv.__file__), 'envs', 'instances', benchmark),
             os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-                        'Job_Shop_Scheduling', 'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark)
+                        'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark)
         ]
         
         for path in potential_paths:
