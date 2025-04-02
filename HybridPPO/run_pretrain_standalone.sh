@@ -13,17 +13,17 @@ mkdir -p checkpoints
 echo "Creating/Refreshing dataset subset using prepare_subset.py..."
 
 # Check if original dataset exists
-if [ -d "../Job_Shop_Scheduling/SelfLabelingJobShop/dataset5k" ]; then
+if [ -d "../SelfLabelingJobShop/dataset5k" ]; then
     # Use prepare_subset.py to create a diverse subset
     python utils/prepare_subset.py \
-        --source ../Job_Shop_Scheduling/SelfLabelingJobShop/dataset5k \
+        --source ../SelfLabelingJobShop/dataset5k \
         --target dataset5k_subset \
         --num 2500
         
     echo "Created dataset subset with $(ls dataset5k_subset | wc -l) instances"
 else
-    echo "Original dataset not found at ../Job_Shop_Scheduling/SelfLabelingJobShop/dataset5k"
-    echo "Please ensure the Job_Shop_Scheduling repository is cloned correctly"
+    echo "Original dataset not found at ../SelfLabelingJobShop/dataset5k"
+    echo "Please ensure the SelfLabelingJobShop repository is cloned correctly"
     exit 1
 fi
 
@@ -35,7 +35,7 @@ fi
 # Run the pretraining script
 python self_labeling_pretrain_standalone.py \
     --data_path ./dataset5k_subset \
-    --val_path ../Job_Shop_Scheduling/SelfLabelingJobShop/benchmarks/validation \
+    --val_path ../SelfLabelingJobShop/benchmarks/validation \
     --model_path ./checkpoints/pretrained_model_standalone.pt \
     --num_instances 50 \
     --iterations 2 \
