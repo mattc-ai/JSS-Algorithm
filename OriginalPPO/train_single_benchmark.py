@@ -156,13 +156,25 @@ def train_single_benchmark(benchmark_name, num_episodes=500, hidden_dim=64,
         # Get the absolute path to the project root
         project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
-        # Try multiple locations for the benchmark file
-        instance_paths = [
-            # Try the installed package
-            os.path.join(os.path.dirname(JSSEnv.__file__), 'envs', 'instances', benchmark_name),
-            # Try the local repository with absolute path
-            os.path.join(project_root, 'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark_name)
-        ]
+        instance_paths = []
+
+        # Try direct path to installed package
+        try:
+            if hasattr(JSSEnv, '__file__') and JSSEnv.__file__ is not None:
+                instance_paths.append(os.path.join(os.path.dirname(JSSEnv.__file__), 'envs', 'instances', benchmark_name))
+        except Exception as e:
+            print(f"Warning: Unable to find JSSEnv installed location: {e}")
+
+        # Try common installation paths
+        import site
+        for site_path in site.getsitepackages():
+            instance_paths.append(os.path.join(site_path, 'JSSEnv', 'envs', 'instances', benchmark_name))
+
+        # Try local repository with absolute path
+        instance_paths.append(os.path.join(project_root, 'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark_name))
+
+        # Try relative to current directory
+        instance_paths.append(os.path.join('JSSEnv', 'envs', 'instances', benchmark_name))
         
         # Find the first path that exists
         instance_path = None
