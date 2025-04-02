@@ -141,7 +141,7 @@ def train_single_benchmark(benchmark_name, num_episodes=500, hidden_dim=64,
             # Try the installed package
             os.path.join(os.path.dirname(JSSEnv.__file__), 'envs', 'instances', benchmark_name),
             # Try the local repository with absolute path
-            os.path.join(project_root, 'Job_Shop_Scheduling', 'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark_name)
+            os.path.join(project_root, 'JSSEnv', 'JSSEnv', 'envs', 'instances', benchmark_name)
         ]
         
         # Find the first path that exists
