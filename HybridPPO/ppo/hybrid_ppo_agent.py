@@ -14,6 +14,8 @@ import os
 import time
 import argparse
 import numpy as np
+if not hasattr(np, 'bool8'):
+    np.bool8 = np.bool_
 import torch
 import torch.nn as nn
 import torch.optim as optim
