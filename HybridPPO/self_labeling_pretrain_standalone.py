@@ -30,7 +30,7 @@ def set_seed(seed):
 
 # Add SelfLabelingJobShop to path
 SELF_LABELING_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 
-                                 "Job_Shop_Scheduling/SelfLabelingJobShop")
+                                 "SelfLabelingJobShop")
 sys.path.insert(0, SELF_LABELING_PATH)  # Insert at beginning to prioritize
 
 # Import sampling module and utils from SelfLabelingJobShop
@@ -61,7 +61,7 @@ except Exception as e:
     print(f"Error importing modules from {SELF_LABELING_PATH}: {e}")
     import traceback
     traceback.print_exc()
-    print("Please ensure the Job_Shop_Scheduling repository is cloned correctly")
+    print("Please ensure the SelfLabelingJobShop repository is cloned correctly")
     sys.exit(1)
 
 # Import our standalone models
@@ -562,7 +562,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Self-Labeling Pre-training for JSP (Standalone)')
     parser.add_argument('--data_path', type=str, default='./dataset5k_subset',
                         help='Path to the training data')
-    parser.add_argument('--val_path', type=str, default='../Job_Shop_Scheduling/SelfLabelingJobShop/benchmarks/validation',
+    parser.add_argument('--val_path', type=str, default='../SelfLabelingJobShop/benchmarks/validation',
                         help='Path to validation instances')
     parser.add_argument('--model_path', type=str, default='./checkpoints/pretrained_model_standalone.pt',
                         help='Path to save the pre-trained model')
